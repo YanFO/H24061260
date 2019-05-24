@@ -1,0 +1,91 @@
+---
+title: '"Homework # 12 ggplot"'
+author: "H24061260"
+output: html_document
+---
+---
+
+title: "Homework # 12 ggplot"
+
+author: yourID
+
+output: html_document
+
+---
+
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = F, fig.align='center')
+
+library(ggplot2)
+
+```
+
+
+
+`mpg` is the dataset that comes with ggplot.  You can use `View(mpg)` to get an overview of the dataset. 
+
+
+
+1. Using the `mpg` dataset generate a scatter plot of `cty` (city mileage) and `hwy` (highway mileage).
+
+```{r}
+qplot(cty,hwy,data=mpg,xlab="City mileage", ylab="Highway mileage")
+```
+
+
+2. Add a colour scale to the scatterplot based on the `displ` variable (engine displacement in liters).
+
+```{r}
+qplot(cty,hwy,data=mpg,xlab="The average city mileage", ylab="The average highway mileage",colour = displ)
+```
+
+
+3. Using the `mpg` dataset recreate the plot as shown below.
+
+```{r}
+#qplot(cty,hwy,data=mpg,xlab="The average city mileage", ylab="The average highway mileage",colour = drv)
+```
+
+```{r}
+(ggplot(mpg, 
+
+        aes(x=cty, y=hwy, 
+
+            color=drv))
+
+        + geom_point() 
+
+        + stat_smooth(method='lm') 
+
+        + theme_bw())
+```
+
+4. Split the `cty` vs hwy plot into a grid of plots separated by `drv`. 
+
+```{r}
+qplot(x=cty, y=hwy, data = mpg, facets =  .~ factor(drv) ,xlab="City mileage",ylab="Highway mileage")
+```
+
+
+5. Generate a boxplot of `cty` comparing `drv` (f=front wheel, r=rear wheel, 4=4 wheel).
+
+```{r}
+qplot(x=drv,y=cty, data=mpg, geom =c("boxplot"))
+```
+
+
+6. Generate density plots of `hwy` coloured by `drv`.  
+
+```{r}
+qplot(hwy, data=mpg, geom ="density", fill=drv, alpha=I(1/3))
+```
+
+
+7. Generate a boxplot of `cty` comparing type of transmission (automatic v.s. manual)
+
+```{r}
+qplot(x=trans,y=cty, data=mpg, geom =c("boxplot","point","jitter"),xlab="Transmission",ylab="City mileages")
+```
